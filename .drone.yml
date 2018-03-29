@@ -1,0 +1,24 @@
+pipeline:
+  publish:
+    image: plugins/docker
+    registry: quay.io
+    repo: quay.io/presslabs/mysql-toolbox
+    username: presslabs+drone
+    tags: ["${DRONE_BRANCH/master/latest}"]
+    secrets:
+      - source: QUAY_TOKEN
+        target: DOCKER_PASSWORD
+    when:
+      event: push
+
+  publish:
+    image: plugins/docker
+    registry: quay.io
+    repo: quay.io/presslabs/mysql-toolbox
+    username: presslabs+drone
+    tags: ["${DRONE_TAG}"]
+    secrets:
+      - source: QUAY_TOKEN
+        target: DOCKER_PASSWORD
+    when:
+      event: tag
